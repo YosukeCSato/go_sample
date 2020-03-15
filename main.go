@@ -30,7 +30,6 @@ func getGormConnect() *gorm.DB {
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
-		println("はんんあんっはんっはｎ")
 		panic(err.Error())
 	}
 
@@ -53,6 +52,15 @@ func insertProduct(registerProduct *Product) {
 	defer db.Close()
 }
 
+func findAllProduct() []Product {
+	db := getGormConnect()
+	var products []Product
+
+	db.Order("ID asc").Find(&products)
+	defer db.Close()
+	return products
+}
+
 func main() {
 
 	var product = Product{
@@ -62,6 +70,14 @@ func main() {
 	}
 
 	insertProduct(&product)
+
+	resultProducts := findAllProduct()
+
+	for i := range resultProducts {
+		fmt.Printf("index: %d, 商品ID: %d, 商品名: %s, メモ: %s, ステータス: %s\n",
+			i, resultProducts[i].ID, resultProducts[i].ProductName, resultProducts[i].Memo, resultProducts[i].Status)
+
+	}
 
 	router := gin.Default()
 	router.LoadHTMLGlob("views/*.html")
@@ -75,6 +91,7 @@ func main() {
 		user.POST("/test", routes.Test)
 		user.POST("/signup", routes.UserSignUp)
 		user.POST("/login", routes.UserLogIn)
+		user.POST("/logout", routes.UserLogout)
 	}
 
 	router.GET("/", routes.Home)

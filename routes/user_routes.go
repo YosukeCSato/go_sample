@@ -34,6 +34,12 @@ func Test(ctx *gin.Context) {
 
 }
 
+func UserLogout(ctx *gin.Context) {
+	session := sessions.GetDefaultSession(ctx)
+	session.Terminate()
+	ctx.Redirect(http.StatusSeeOther, "/")
+}
+
 func UserSignUp(ctx *gin.Context) {
 	println("post/signup")
 	username := ctx.PostForm("username")

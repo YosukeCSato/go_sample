@@ -12,6 +12,10 @@ const (
 	DefaultCookieName  = "samplesession"
 )
 
+func (s *DummySession) Terminate() {
+	s.store.Delete(s.ID)
+}
+
 func NewDummySession(store *DummyStore, cookieName string) *DummySession {
 	return &DummySession{
 		cookieName: cookieName,
