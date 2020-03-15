@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/YosukeCSato/go_sample/routes"
+	// "github.com/YosukeCSato/go_sample/routes"
+
+	"m/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,6 +22,7 @@ func main() {
 	router.GET("/", routes.Home)
 	router.GET("/login", routes.LogIn)
 	router.GET("/signup", routes.SignUp)
+	router.GET("/loggedin", routes.LoggedIn)
 	router.NoRoute(routes.NoRoute)
 
 	router.Run(":8080")

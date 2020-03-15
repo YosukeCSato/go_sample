@@ -10,8 +10,16 @@ func Home(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "index.html", gin.H{})
 }
 
+func LogIn(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "login.html", gin.H{})
+}
+
+func SignUp(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "signup.html", gin.H{})
+}
+
 func LoggedIn(ctx *gin.Context) {
-	ctx.String(http.StatusOK, "ahan")
+	ctx.HTML(http.StatusOK, "loggedin.html", gin.H{})
 }
 
 func NoRoute(ctx *gin.Context) {
