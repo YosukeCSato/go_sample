@@ -4,6 +4,7 @@ import (
 	// "github.com/YosukeCSato/go_sample/routes"
 
 	"m/routes"
+	"m/sessions"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,6 +13,9 @@ func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("views/*.html")
 	router.Static("/assets", "./assets")
+
+	store := sessions.NewDummyStore()
+	router.Use(sessions.StartDefaultSession(store))
 
 	user := router.Group("/user")
 	{

@@ -1,12 +1,28 @@
 package routes
 
 import (
+	"m/config"
+	"m/sessions"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Home(ctx *gin.Context) {
+	session := sessions.GetDefaultSession(ctx)
+	buffer, exists := session.Get("user")
+	if exists {
+		user := buffer.(*config.DummyUserModel)
+		println("Home sweet home")
+		println("  sessionID: " + session.ID)
+		println("  username: " + user.Username)
+		println("  email: " + user.Email)
+	} else {
+		println("Unhappy home")
+		println("  sessionID: " + session.ID)
+	}
+
+	session.Save()
 	ctx.HTML(http.StatusOK, "index.html", gin.H{})
 }
 
